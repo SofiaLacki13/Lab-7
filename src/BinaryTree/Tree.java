@@ -39,11 +39,36 @@ class TreeNode<E extends Comparable<E>> {
       } 
    } 
 
-   public void remove(E removeValue) {
-      while (removeValue.compareTo(data) != 0) {
-         
+   public TreeNode<E> removeNode() {
+      if (rightNode == null && leftNode == null) { //no children
+         data = null;
+      } else if (rightNode == null) { //only left child
+         data = leftNode.data;
+         leftNode.data = null;
+      } else if (leftNode == null) { //only right child
+         data = rightNode.data;
+         rightNode.data = null;
+      } else { //both children
+         data = getMin();
       }
    }
+
+   public TreeNode<E> getMin() {
+      
+   }
+
+   public TreeNode<E> left() {
+      return leftNode;
+   }
+
+   public TreeNode<E> right() {
+      return rightNode;
+   }
+   public E data() {
+      return data;
+   }
+
+   
 } 
 
 // class Tree definition
@@ -63,14 +88,53 @@ public class Tree<E extends Comparable<E>> {
       }
    } 
 
-   public void removeNode(E removeValue) {
+   public void findRemoveNode(E removeValue) {
       if (root == null) {
-         System.out.println("This tree is empty! You can't remove anything.");
+         System.out.println("This tree is empty! We won't find anything!");
       }
       else {
-         root.remove(insertValue);
+         while (removeValue.compareTo(root.data()) != 0) {
+            TreeNode<E> left = root.left();
+            TreeNode<E> right = root.right();
+            E data = root.data();
+            
+            if (removeValue.compareTo(data) < 0) {
+            
+               if (left != null) {
+                  root = left;
+               } else {
+                  break;
+               }
+            }
+            else if (removeValue.compareTo(data) > 0) {
+               
+               if (right != null) {
+                  root = right;
+               } else {
+                  break;
+               }
+            }
+            
+         
+         if (removeValue.compareTo(data) == 0) {
+            removeNode(root, right, left)
+
+         }
       }
    }
+
+   public void removeNode(TreeNode<E> root, TreeNode<E>) {
+      if (right == null && left == null) { //no children
+         root = null;
+      } else if (right == null) { //only left child
+         root = left;
+      } else if (left == null) {
+         root = right;
+      } else { //both children
+         root = getMin();
+      }
+   }
+
 
    // begin preorder traversal 
    public void preorderTraversal() {preorderHelper(root);}
